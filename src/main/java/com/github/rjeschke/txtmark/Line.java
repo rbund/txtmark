@@ -518,7 +518,8 @@ class Line
         final LinkedList<String> tags = new LinkedList<String>();
         final StringBuilder temp = new StringBuilder();
         int pos = this.leading;
-        if (this.value.charAt(this.leading + 1) == '!')
+        // RB: Bugfix for issue #48
+        if ((this.leading + 1 < this.value.length()) && (this.value.charAt(this.leading + 1) == '!'))
         {
             if (this.readXMLComment(this, this.leading) > 0)
             {
