@@ -572,8 +572,8 @@ class Emitter
                 break;
             // RB: extension for autlinks according to issue #7
             case AUTO_LINK:
-                temp.setLength(0);                
-                b = Utils.readUntil(temp, in, pos, ' ','\n');                
+                temp.setLength(0);
+                b = Utils.readUntil(temp, in, pos, ' ','<','\n'); // '<' needed due to potential <br/>
                 if (b > 0) {
                     this.config.decorator.openLink(out);
                     out.append(" href=\"");
@@ -582,7 +582,7 @@ class Emitter
                     out.append('>');
                     Utils.appendValue(out, temp.toString(), 0, temp.length());
                     this.config.decorator.closeLink(out);
-                    pos = b;
+                    pos = b-1;
                 }
                 break;
             case EM_STAR:
@@ -660,6 +660,7 @@ class Emitter
                 }
                 break;
             case HTML:
+                System.out.println("found html!");
                 temp.setLength(0);
                 b = this.checkHtml(temp, in, pos);
                 if (b > 0)
@@ -780,6 +781,7 @@ class Emitter
         final char c4 = pos + 4 < in.length() ? whitespaceToSpace(in.charAt(pos + 4)) : ' ';
         final char c5 = pos + 5 < in.length() ? whitespaceToSpace(in.charAt(pos + 5)) : ' ';
         final char c6 = pos + 6 < in.length() ? whitespaceToSpace(in.charAt(pos + 6)) : ' ';
+        final char c7 = pos + 7 < in.length() ? whitespaceToSpace(in.charAt(pos + 7)) : ' ';
        
         switch (c)
         {
@@ -869,11 +871,16 @@ class Emitter
         case 'H':
             if ( (Character.toLowerCase(c1) == 't') &&
                  (Character.toLowerCase(c2) == 't') &&
-                 (Character.toLowerCase(c3) == 'p') &&
-                 (c4 == ':') &&
-                 (c5 == '/') &&
-                 (c6 == '/') )
-                return(MarkToken.AUTO_LINK);
+                 (Character.toLowerCase(c3) == 'p') ) {
+                    
+                    if (((Character.toLowerCase(c4) == 's') &&
+                        (c5 == ':') &&
+                        (c6 == '/') &&
+                        (c7 == '/') ) || (                           
+                        (c4 == ':') &&
+                        (c5 == '/') &&
+                        (c6 == '/')) )  return(MarkToken.AUTO_LINK);
+            }
         default:
             if (this.useExtensions)
             {
