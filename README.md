@@ -26,5 +26,15 @@ __René did a great job creating this library and I feel as I'm able to add some
 
 All changes done by me will also apply to the Apache License, Version 2.0.
 
+***
+
+## Changes made so far ##
+
+1. __Bugfix__ for issue #34: _Numeric list after unnumbered lists continues unnumbered list_
+2. __Bugfix__ for issue #48: _StringIndexOutOfBoundsException_ - This also solved a not yet documented issue for indented XML remarks.
+3. __Implementation__ of issue #7 (actually a feature request): _auto link links_
+
+
+
 Best,
 Rüdiger Bund
