@@ -140,7 +140,17 @@ class Utils
             pos++;
         }
 
-        return (pos == in.length()) ? -1 : pos;
+        // RB: extension to have '\n' as a valid 'end of line' end mark
+        final char ch = pos < in.length() ? in.charAt(pos) : '\n';
+        for (int n = 0; n < end.length; n++)
+        {
+            if (ch == end[n]) 
+            {
+                return(pos);
+            }
+        }
+        return(-1);
+        //return (pos == in.length()) ? -1 : pos;
     }
 
     /**
