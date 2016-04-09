@@ -38,6 +38,9 @@ enum MarkToken
     CODE_DOUBLE,        // ``
     /** [ */
     LINK,               // [
+    // RB: extension for autlinks according to issue #7
+    /** ftp:// | http:// | https:// */
+    AUTO_LINK,          // ftp:// | http:// | https://
     /** &lt; */
     HTML,               // <
     /** ![ */
