@@ -570,6 +570,21 @@ class Emitter
                     out.append(in.charAt(pos));
                 }
                 break;
+            // RB: extension for autlinks according to issue #7
+            case AUTO_LINK:
+                temp.setLength(0);                
+                b = Utils.readUntil(temp, in, pos, ' ','\n');                
+                if (b > 0) {
+                    this.config.decorator.openLink(out);
+                    out.append(" href=\"");
+                    out.append(temp.toString());                    
+                    out.append('"');
+                    out.append('>');
+                    Utils.appendValue(out, temp.toString(), 0, temp.length());
+                    this.config.decorator.closeLink(out);
+                    pos = b;
+                }
+                break;
             case EM_STAR:
             case EM_UNDERSCORE:
                 temp.setLength(0);
@@ -761,7 +776,11 @@ class Emitter
         final char c1 = pos + 1 < in.length() ? whitespaceToSpace(in.charAt(pos + 1)) : ' ';
         final char c2 = pos + 2 < in.length() ? whitespaceToSpace(in.charAt(pos + 2)) : ' ';
         final char c3 = pos + 3 < in.length() ? whitespaceToSpace(in.charAt(pos + 3)) : ' ';
-
+        // RB: extension for autlinks according to issue #7
+        final char c4 = pos + 4 < in.length() ? whitespaceToSpace(in.charAt(pos + 4)) : ' ';
+        final char c5 = pos + 5 < in.length() ? whitespaceToSpace(in.charAt(pos + 5)) : ' ';
+        final char c6 = pos + 6 < in.length() ? whitespaceToSpace(in.charAt(pos + 6)) : ' ';
+       
         switch (c)
         {
         case '*':
@@ -837,6 +856,24 @@ class Emitter
             return MarkToken.HTML;
         case '&':
             return MarkToken.ENTITY;
+        // RB: extension for autlinks according to issue #7
+        case 'F':
+        case 'f':
+            if ( (Character.toLowerCase(c1) == 't') &&
+                 (Character.toLowerCase(c2) == 'p') &&
+                 (c3 == ':') &&
+                 (c4 == '/') &&
+                 (c5 == '/') )
+                return(MarkToken.AUTO_LINK);
+        case 'h':
+        case 'H':
+            if ( (Character.toLowerCase(c1) == 't') &&
+                 (Character.toLowerCase(c2) == 't') &&
+                 (Character.toLowerCase(c3) == 'p') &&
+                 (c4 == ':') &&
+                 (c5 == '/') &&
+                 (c6 == '/') )
+                return(MarkToken.AUTO_LINK);
         default:
             if (this.useExtensions)
             {
