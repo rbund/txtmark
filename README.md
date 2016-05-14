@@ -6,15 +6,14 @@ See LICENSE.txt for licensing information.
 
 _For more detailed information please have a look onto the [original page](https://github.com/rjeschke/txtmark)_
 
-
-__Historical:__
-
 ***
 ## Important!
 Development on this repository is __canceled__ in favor of the [Commonmark](https://github.com/atlassian/commonmark-java) implementation. I will keep the repository some time for documentation but it might be dropped in future without any further notice.
 
 
 __Some explanation on that__: Markdown as such isn't clearly specified. Unfortunately even with a test suite provided, the specification leaves space for various possible interpretations. René probably saw that too and stated, that txtmark isn't Markdown. Now [Commonmark](commonmark.org) fills the gap and Atlassian did a great job in implementing it in Java. Their implementation fulfill the requirements I have and as a result, no further development on txtmark is needed from my side.
+
+__Historical:__
 
 ***
 
