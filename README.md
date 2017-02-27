@@ -1,3 +1,5 @@
+![ABANDONED](https://img.shields.io/badge/status-abandoned-red.svg)
+
 __This is a fork of__  
 
 # Txtmark - Java markdown processor
